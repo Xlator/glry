@@ -1,0 +1,18 @@
+{
+    "minimum-stability": "dev",
+    "require": {
+        "silex/silex": "1.0.*",
+        "twig/twig": "1.*",
+        "symfony/twig-bridge": "2.1.*",
+        "symfony/browser-kit": "2.1.*",
+        "symfony/css-selector": "2.1.*",
+        "doctrine/dbal": "2.2.*",
+        "rych/phpass": "2.*"
+    },
+    "autoload":
+    {
+        "psr-0": {
+            "Lennux": "src/"
+        }
+    }
+}

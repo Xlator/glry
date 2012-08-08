@@ -1,0 +1,22 @@
+<div class="mainimg" 
+{% if collection%2 == 0 %}    
+style="background-image:url(http://placekitten.com/1125/751);"
+{% else %}
+style="background-image:url(http://baconmockup.com/1125/750);"
+{% endif %}
+>
+<!-- <nav><a href="#toggle">Hide previews</a> | <a href="#move">Move to bottom</a></nav> -->
+<!-- <div class=filler></div> -->
+<!-- <nav><a href="#toggle">Hide previews</a></nav> -->
+</div>
+
+<footer class=previews>
+    <ul>
+        {% for i in range(1,8) %}
+        <li>
+            <div style="background-image:url(http://lorempixel.com/100/100/animals/{{i}});" class="preview" />
+        </li>
+        {% endfor %}
+    </ul>
+</footer>
+

@@ -1,0 +1,12 @@
+<div class="mainimg" style="background-image:url(collections/{{ collection_id }}/{{collection.0.filename}});"></div>
+
+<footer class=previews>
+    <ul>
+        {% for image in collection  %}
+        <li>
+            <div style="background-image:url(collections/{{ collection_id }}/{{ image.filename }})" class="preview" data-collection="{{ collection_id }}" />
+        </li>
+        {% endfor %}
+    </ul>
+</footer>
+

@@ -1,0 +1,15 @@
+{%extends 'layout.html' %}
+{%block content%}
+<div id="collections">
+    <ul>
+        {% for collection in collections %}
+        <li>
+            <div class="image" style="background-image:url(collections/{{ collection.id }}/{{ collection.keyimage }});"  data-collection={{ collection.id }} data-title="{{ collection.title }}"  />
+                <span class=imgcount>{{ collection.imagecount }}</span>
+                <footer>{{ collection.title }} <time>{{ collection.created|date }}</time></footer>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

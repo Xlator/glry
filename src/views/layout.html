@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+
+    <link media="all" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css" type="text/css" rel="stylesheet" />
+    <link media="all" href="style.css" type="text/css" rel="stylesheet" />
+    <script type=text/javascript src=http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js></script>
+    <title>The Gallery</title>
+</head>
+{% include 'login.html' %}
+<body>
+    <header>
+        <h1>The Gallery</h1>
+        <nav>
+            <a href="#">Collections</a> | <a href="#login" class=login-window>Login</a>
+        </nav>
+    </header>
+    <section id=images></section>
+    <section id="content">
+        {% block content %}{% endblock %}
+    </section>
+    <script src="scripts.js"></script>
+</body>
+</html>

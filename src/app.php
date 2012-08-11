@@ -1,41 +1,43 @@
 <?php
+/* phpinfo(); */
+/* ini_set('html_errors', 'on'); */
+date_default_timezone_set(@date_default_timezone_get());
 
-require_once __DIR__.'/init.php';
+/** Namespaces **/
+    use Silex\Application;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
-/** Routes */
-    $app->get('/', function() use($app){
-        return $app['twig']->render('collections.html', array(
-            'collections' => $app['galleryService']->getCollections()
-        ));
-    });
+/** Bootstrap **/
+    require_once __DIR__.'/../vendor/autoload.php';
+    $path = pathinfo($_SERVER['SCRIPT_NAME']);
+    $app = new Application();
 
-    $app->get('/c/{collection_id}', function($collection_id) use ($app){
-        return $app['twig']->render('images.html', array(
-            'collection' => $app['galleryService']->getCollection($collection_id),
-            'collection_id' => $collection_id
-        ));
-    });
+    $app['debug'] = true;
+    $app['base'] = ($path['dirname'] != "/" ? $path['dirname'] . "/" : "/" );
+    /* $app->register(new Silex\Provider\ValidatorServiceProvider()); */
+    $app->register(new Silex\Provider\TranslationServiceProvider());
+    $app->register(new Silex\Provider\SessionServiceProvider());
+    $app->register(new Silex\Provider\FormServiceProvider());
 
-    $app->post('/install', function(Request $request) use ($app) {
-        $app['login']->storeHash($request->get('pass'));
-        /* return $app->redirect($app['base']); */
-    }); 
+    // Initialise templating and set default date format
+    $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/views'));
+    $app['twig']->getExtension('core')->setDateFormat('Y-m-d');
 
-    $app->get('/install', function() use ($app) {
-        if($app['login']->checkAuth())
-            throw new Exception('Password is already set');
-        return $app['twig']->render('install.html');
-    });
+    // Setup database
+    $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
+        'db.options' => array(
+            'driver' => 'pdo_sqlite',
+            'path'   => __DIR__.'/../db/glry.db',
+        ),  
+    ));
 
-    $app->post('/login', function (Request $request) use($app) {
-        if($app['login']->checkPass($request->get('pass')))
-            $app['session']->set("login", 1);
+    // Initialise services
+    $app->register(new Lennux\GalleryServiceProvider());
+    $app->register(new Lennux\LoginServiceProvider());
 
-        return $app->redirect($app['base']);
-    });
-    
-    $app->get('/new/{token}', function(Request $request) use($app) {
-        var_dump($request);
-        var_dump($app['session']);
-    });
+    // Mount controllers
+    $app->mount('/', new Lennux\Controller\BaseControllers);
+    $app->mount('/api', new Lennux\Controller\ApiControllers);
+
 return $app;

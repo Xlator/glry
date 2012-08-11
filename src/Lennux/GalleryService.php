@@ -6,14 +6,17 @@ class GalleryService {
     private $db;
     private $urls = array();
 
-    const url_regex = '^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?^';
-
     public function __construct($db) {
         $this->db = $db;
     }
 
     public function getCollections() {
-        $sql = "SELECT c.id, c.title, c.created, i.filename AS keyimage, ((SELECT COUNT(*) FROM images WHERE collection_id = c.id)) AS imagecount FROM collections AS c JOIN images AS i ON i.collection_id = c.id AND i.pos = 0 ";
+        $sql = "SELECT c.id, c.title, c.created, i.filename AS keyimage, 
+                    ((SELECT COUNT(*) FROM images 
+                    WHERE collection_id = c.id)) 
+                AS imagecount 
+                FROM collections AS c 
+                JOIN images AS i ON i.collection_id = c.id AND i.pos = 0 ";
         $collections = $this->db->fetchAll($sql);
         $colls = array();
         foreach($collections as $c) {
@@ -29,16 +32,36 @@ class GalleryService {
 
         return $images;
     }
-    /* private function readUrls() { */
-    /*     $sql = "SELECT * FROM urls ORDER BY timestamp DESC"; */
-    /*     $urls = $this->db->fetchAll($sql); */
-    /*     $list = array(); */
-    /*     foreach($urls as $u) { */
-    /*         $list[$u["slug"]]["url"] = $u["url"]; */
-    /*         $list[$u["slug"]]["timestamp"] = $u["timestamp"]; */
-    /*     } */
-    /*     return $list; */
-    /* } */
+
+    private function insertId($table) {
+        $sql = "SELECT last_insert_rowid() AS id '?' LIMIT 1";
+        $info = $this->db->fetchAssoc($sql, array($table));
+        return $info['id'];
+    }
+
+    public function addCollection() {
+        
+    }
+
+    public function editCollection($id) {
+        
+    }
+
+    public function deleteCollection($id) {
+        
+    }
+
+    public function addImage($collection_id) {
+        
+    }
+
+    public function editImage($id) {
+        
+    }
+
+    public function deleteImage($id) {
+        
+    }
 
     /* public function add($slug = NULL, $url) { */
     /*     if(!\preg_match(self::url_regex, $url)) */ 

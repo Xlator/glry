@@ -2,17 +2,23 @@
     "minimum-stability": "dev",
     "require": {
         "silex/silex": "1.0.*",
-        "twig/twig": "1.*",
-        "symfony/twig-bridge": "2.1.*",
         "symfony/browser-kit": "2.1.*",
         "symfony/css-selector": "2.1.*",
+        "symfony/twig-bridge": "2.1.*",
+        "twig/twig": ">=1.8,<2.0-dev",
+        "symfony/form": "2.1.*",
+        "symfony/translation": "2.1.*",
+        "symfony/locale": "2.1.*",
+        "symfony/validator": "2.1.*",
+        "symfony/yaml": "2.1.*",
         "doctrine/dbal": "2.2.*",
         "rych/phpass": "2.*"
     },
     "autoload":
     {
         "psr-0": {
-            "Lennux": "src/"
+            "Lennux": "src/",
+            "Lennux\\Controller": "src/Lennux/"
         }
     }
 }

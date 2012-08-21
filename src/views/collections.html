@@ -1,15 +1,15 @@
-{%extends 'layout.html' %}
-{%block content%}
 <div id="collections">
     <ul>
         {% for collection in collections %}
+        {% if(collection.imagecount > 0 or app.session.get('login') == 1) %}
         <li>
-            <div class="image" style="background-image:url(collections/{{ collection.id }}/{{ collection.keyimage }});"  data-collection={{ collection.id }} data-title="{{ collection.title }}"  />
+            <div class="image" style="background-image:url({{app.base}}collections/{{ collection.id }}/{{ collection.keyimage }});"  data-collection={{ collection.id }} data-title="{{ collection.title }}"  />
                 <span class=imgcount>{{ collection.imagecount }}</span>
-                <footer>{{ collection.title }} <time>{{ collection.created|date }}</time></footer>
+                <footer><span>{{ collection.title }}</span> <time>{{ collection.created|date }}</time></footer>
             </div>
         </li>
+        {% endif %}
         {% endfor %}
     </ul>
 </div>
-{% endblock %}
+{% include 'collections_model.html' %}

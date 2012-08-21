@@ -1,0 +1,25 @@
+{%extends 'layout.html' %}
+{%block content%}
+<div class="admin">
+    <header>
+        <input id=collection_title type="" name="" value="{{collections[collection_id].title}}" placeholder ="Collection title" />
+        <input type=hidden class=lastTitle value="{{collections[collection_id].title}}" />
+        <nav>
+            <a href=#deletecollection><img src={{app.base}}assets/images/list_remove.png></a>
+            <span>
+                Quick sort
+                <a href=#uploaded>by upload time</a>
+                <a href=#captured>by capture time</a>
+            </span>
+        </nav>
+    </header>
+    <ul id=sortable>
+        {% for image in images.images %}
+            {% include 'admin_preview.html' %}
+        {% endfor %}
+    </ul>
+    {% include 'admin_preview_model.html' %}
+</div>
+{% include 'admin_edit.html' %}
+{% include 'admin_delete.html' %}
+{%endblock%}

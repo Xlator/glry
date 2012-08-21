@@ -1,0 +1,30 @@
+        <li class="adminpreview ui-state-default" data-image={{image.id}} data-pos={{image.pos}}>
+            <div>
+                <img src="{{app.base}}collections/{{image.collection_id}}/{{image.filename}}" 
+                alt="{{image.title}}" />
+            </div>
+            <footer>
+                <input value="{{image.title}}" placeholder="Image title" />
+                <input value="{{image.title}}" type="hidden" class="lastTitle" />
+                <dl>
+                    {% if image.captured != false %}
+                    <dt>Captured:
+                    <dd><time class=captured data-timestamp={{image.captured|date('U')}}>{{image.captured|date('Y-m-d H:i')}}</time>
+                    {% endif %}
+                    <dt>Uploaded:
+                    <dd><time class=uploaded data-timestamp={{image.uploaded|date('U')}}>{{image.uploaded|date('Y-m-d H:i')}}</time>
+                </dl>
+                <nav>
+                    <img class=move src={{app.base}}assets/images/move.png>
+                    <a href=https://maps.google.com/?q={{image.gpspos}}>
+                        <img class=marker src=http://www.google.com/mapfiles/marker.png alt="Google Maps" />
+                    </a>
+                    <a href=#edit>
+                        <img class=edit src={{app.base}}assets/images/pencil2.png alt=Edit>
+                    </a>
+                    <a href=#delete data-selected=0>
+                        <img class=delete src={{app.base}}assets/images/list_remove.png alt=Delete>
+                    </a>
+                </nav>
+            </footer>
+        </li>

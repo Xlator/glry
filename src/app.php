@@ -15,13 +15,13 @@ date_default_timezone_set(@date_default_timezone_get());
 
     $app['debug'] = true;
     $app['base'] = ($path['dirname'] != "/" ? $path['dirname'] . "/" : "/" );
-    /* $app->register(new Silex\Provider\ValidatorServiceProvider()); */
     $app->register(new Silex\Provider\TranslationServiceProvider());
     $app->register(new Silex\Provider\SessionServiceProvider());
     $app->register(new Silex\Provider\FormServiceProvider());
 
     // Initialise templating and set default date format
-    $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/views'));
+    $app->register(new Silex\Provider\TwigServiceProvider(), 
+        array('twig.path' => __DIR__.'/views'));
     $app['twig']->getExtension('core')->setDateFormat('Y-m-d');
 
     // Setup database
@@ -34,10 +34,14 @@ date_default_timezone_set(@date_default_timezone_get());
 
     // Initialise services
     $app->register(new Lennux\GalleryServiceProvider());
+    $app->register(new Lennux\UploadServiceProvider());
     $app->register(new Lennux\LoginServiceProvider());
 
     // Mount controllers
     $app->mount('/', new Lennux\Controller\BaseControllers);
     $app->mount('/api', new Lennux\Controller\ApiControllers);
+
+    if($app['session']->get('login') == 1)
+        $app->mount('/admin', new Lennux\Controller\AdminControllers);
 
 return $app;

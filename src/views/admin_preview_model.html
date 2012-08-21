@@ -1,0 +1,28 @@
+<ul id="adminpreview_model" style="display: none;">
+    <li class="adminpreview ui-state-default" data-image="" data-pos="">
+        <div>
+            <img src="" alt="" />
+        </div>
+        <footer><input value="" placeholder="Image title" data-lastTitle=""/>
+                <input value="" type="hidden" class="lastTitle" />
+            <dl>
+                <dt>Captured:
+                <dd><time class=captured data-timestamp=""></time>
+                <dt>Uploaded:
+                <dd><time class=uploaded data-timestamp=""></time>
+            </dl>
+            <nav>
+                <img class=move src={{app.base}}assets/images/move.png>
+                <a href="">
+                    <img class=marker src=http://www.google.com/mapfiles/marker.png alt="Google Maps" />
+                </a>
+                <a href=#edit>
+                    <img class=edit src={{app.base}}assets/images/pencil2.png alt=Edit>
+                </a>
+                <a href=#delete data-selected=0>
+                    <img class=delete src={{app.base}}assets/images/list_remove.png alt=Delete>
+                </a>
+            </nav>
+        </footer>
+    </li>
+</ul>

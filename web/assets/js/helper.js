@@ -1,29 +1,53 @@
 Helper = { 
 
         delete: [],
-        order: [],
+        order: [], // Order of images in current collection
+        collectionOrder: [], // Order of collections
 
-        // Event handler for dragging in files, shows dropzone overlay
-        onDragenter: function(e) {
+        Drag: {
+            // Event handler for dragging in files, shows dropzone overlay
+            enter: function(e) {
+                console.log(e.dataTransfer.types);
+                console.log(typeof e.dataTransfer.types);
 
-            if($.inArray('Files', e.dataTransfer.types) == -1) {
-                $(window).one('dragenter', Helper.onDragenter);
-                return;
-            }
+                var drag = true; 
 
-            Upload.createDropzones();
-            // var dle = $(window).data('events').dragleave;
-            // console.log(dle);
-            $(window).one('dragleave', 'div#imageDrop', Helper.onDragleave);
-            $(window).one('dragleave', 'div#collectionDrop', Helper.onDragleave);
-        },
+                // Check file type(s) to avoid activating when dragging page elements around
+                $.each(e.dataTransfer.types, function(i, v) {
+                    if(typeof v == "string") {
+                        if(v.indexOf('text') != -1)
+                            drag = false;
+                    }
+                });
+
+                if(drag == false)
+                    // If the dragged object isn't a file, bind dragend event
+                    return function() {
+                        $(window).one('dragend', Helper.Drag.end);
+                    }();
+
+                Upload.createDropzones();
+                $(window).one('dragleave', 'div#imageDrop', Helper.Drag.leave);
+                $(window).one('dragleave', 'div#collectionDrop', Helper.Drag.leave);
+            },
         
-        // Event handler for leaving browser window while dragging
-        onDragleave: function(e) {
-            // console.log(e);
-            $(window).off('dragleave');
-            Upload.destroyDropzones();
-            $(document).one('dragenter', Helper.onDragenter); 
+            // Event handler for leaving browser window while dragging
+            leave: function(e) {
+
+                // Unbind superfluous dragleave events to avoid duplication
+                $(window).off('dragleave');
+
+                Upload.destroyDropzones();
+
+                // Rebind dragenter handler
+                $(document).one('dragenter', Helper.Drag.enter); 
+            },
+
+            // Event hadner for ending the dragging of a page element/non-file
+            end: function(e) {
+                // Rebind dragenter
+                $(window).one('dragenter', Helper.Drag.enter);
+            },
         },
 
         isAdmin: function() {
@@ -164,6 +188,31 @@ Helper = {
                     });
 
                 }
+            });
+        },
+
+        updateCollectionOrder: function() {
+            var collections = $('div#collections').find('li');
+            oldOrder = Helper.collectionOrder.join();
+            Helper.collectionOrder = [];
+
+            collections.each(function(i, li) {
+                Helper.collectionOrder.push($(li).find('div.image').data('collection'));
+            });
+
+            newOrder = Helper.collectionOrder.join();
+
+            if(oldOrder == newOrder)
+                return false;
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "{0}admin/reorder".format(basepath),
+                data: { collections: Helper.collectionOrder },
+                success: function(response) {
+                    humane.log(response.message);
+                },
             });
         },
 

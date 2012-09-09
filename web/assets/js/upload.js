@@ -2,15 +2,19 @@
         allowed: ['image/jpeg','image/png','image/gif'],
         data: [],
         drop: function(e) { // Handle dropped files
-            Helper.onDragleave();
-            Upload.files = e.dataTransfer.files;
 
+            // Rebind dragenter handler and destroy dropzones
+            Helper.Drag.leave();
+
+            Upload.files = e.dataTransfer.files;
             Helper.dfd = $.Deferred();
 
+            // If images are dropped in the sidebar...
             if($(e.currentTarget).attr('id') == 'collectionDrop') {
+                // Create a collection first
                 Admin.createCollection(e);
             }
-            else
+            else // Just upload to the current collection
                 Helper.dfd.resolve();
 
             Helper.dfd.done(function(e) {
@@ -18,15 +22,10 @@
                     var reader = new FileReader();
                     reader.onload = (function(file) {
                         return function(e) {
-                            // Upload.data.push({
-                            //     name: file.name,
-                            //     value: this.result
-                            // });
-                        // console.log(file.type);
                         if($.inArray(file.type, Upload.allowed) == 0)
                             Upload.send({name: file.name, value: this.result});
                         else // Show error message when non-image files are dropped
-                            humane.log("Images only!");
+                            humane.error("Images only!");
                         }
                     })(Upload.files[index]);
 

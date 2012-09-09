@@ -1,9 +1,22 @@
+.humane { 
+    top: 60px; 
+}
+
+@mixin linear-gradient($top, $bottom) {
+    background: -webkit-gradient(linear, left top, left bottom, from($top), to($bottom));
+    background: -webkit-linear-gradient(top, $top, $bottom);
+    background: -moz-linear-gradient(top, $top, $bottom);
+    background: -ms-linear-gradient(top, $top, $bottom);
+    background: -o-linear-gradient(top, $top, $bottom);
+}
+
 @font-face {
     font-family: 'd puntillas B to tiptoe';
-        src: url('../fonts/d-puntillas-B-to-tiptoe.ttf') format('truetype');
+    src: url('../fonts/d-puntillas-B-to-tiptoe.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-      }
+}
+
 
 html {
     background: url('../images/bg.png');
@@ -98,8 +111,8 @@ section#content {
     div.mainimg {
         max-width: 1125px;
         width: 1125px;
-        max-height: 750px;
-        height: 750px;
+        max-height: 850px;
+        height: 850px;
 
         background: {
             image: url(../images/load.gif);
@@ -174,7 +187,6 @@ section#content {
 
             nav {
                 // background: #090;
-                width: 40%;
                 height: 2em;
                 float: right;
 
@@ -206,11 +218,11 @@ section#content {
             float: left;
             li.adminpreview {
 
+                @include linear-gradient(#f2f2f2, #d9d9d9);
                 cursor: grab;
                 border-radius: 10%;
                 padding: 1em;
                 border: 1px solid #ddd;
-                background-image: -moz-linear-gradient(top, #fff, #f7f7f7 3%, #f2f2f2 12%, #eee 90%, #bfbfbf);
 
                 float:left;
                 max-width: 200px;
@@ -330,6 +342,7 @@ footer.previews {
         width: 100px;
         margin: { 
             left: 10px;
+            bottom: 10px;
         }
 
         padding: 0;
@@ -370,6 +383,7 @@ div#collections {
     margin: 0; 
     overflow: auto;
     padding: 0;
+    padding-top: 1em;
     background: #aaa;
     width: 100%;
 
@@ -382,9 +396,10 @@ div#collections {
         margin:0; 
         text-indent: 0; 
         margin: auto; 
+        float: left;
 
         li {
-            // float: left;
+            float: left;
             width: 200px;
             margin: 0em 0em 16px 16px;
 
@@ -440,7 +455,7 @@ div#collections {
 
 
 @media screen and (max-width: 1580px) {
-    div#collections ul {
+    div#collections ul li {
         float: none;
     } 
 
@@ -449,23 +464,9 @@ div#collections {
 /* You can customize to your needs  */
 .login-popup{
 
-// border: 1px solid black;
-// border-radius: 10px;
-// background-image: -webkit-gradient(linear, center top, center bottom, from(#fcfcfc), to(#bfbfbf), color-stop(3%, #f7f7f7), color-stop(12%, #f2f2f2), color-stop(90%, #d9d9d9));
-// background-image: -webkit-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-// background-image: -moz-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-// background-image: -o-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-// background-image: -ms-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-// background-image: linear-gradient(to bottom, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-
-
 border: 1px solid black;
-background-image: -webkit-gradient(linear, center top, center bottom, from(#fcfcfc), to(#bfbfbf), color-stop(3%, #f7f7f7), color-stop(12%, #f2f2f2), color-stop(90%, #d9d9d9));
-background-image: -webkit-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-background-image: -moz-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-background-image: -o-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-background-image: -ms-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-background-image: linear-gradient(to bottom, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
+@include linear-gradient(#f2f2f2, #d9d9d9);
+
 -webkit-box-shadow: 21px 24px 100px 2px rgba(255,255,255,0.16), inset 0 100px 100px 18px rgba(255,239,8,0.04);
 -moz-box-shadow: 21px 24px 100px 2px rgba(255,255,255,0.16), inset 0 100px 100px 18px rgba(255,239,8,0.04);
 box-shadow: 21px 24px 100px 2px rgba(255,255,255,0.16), inset 0 100px 100px 18px rgba(255,239,8,0.04);
@@ -569,13 +570,6 @@ box-shadow: 21px 24px 100px 2px rgba(255,255,255,0.16), inset 0 1px 0 white;
     }
 }
 
-@mixin linear-gradient($top, $bottom) {
-    background: -webkit-gradient(linear, left top, left bottom, from($top), to($bottom));
-    background: -webkit-linear-gradient(top, $top, $bottom);
-    background: -moz-linear-gradient(top, $top, $bottom);
-    background: -ms-linear-gradient(top, $top, $bottom);
-    background: -o-linear-gradient(top, $top, $bottom);
-}
 
 input[type=submit], button {
     width: 200px;
@@ -586,11 +580,9 @@ input[type=submit], button {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+
     @include linear-gradient(#fff, #eeeedc);
-    // -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-    // -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-    // box-shadow: rgba(0,0,0,1) 0 1px 0;
-    // text-shadow: rgba(0,0,0,.4) 0 1px 0;
+
     color: #000000;
     font-size: 0.7em;
     text-decoration: none;

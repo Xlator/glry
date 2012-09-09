@@ -69,7 +69,6 @@ Login = {
 
                 error: function(response) {
                     $('div.spinner').css('opacity', 0);
-                    humane.error = humane.spawn({ addnCls: 'humane-jackedup-error' });
                     humane.error('Login failed');
                 }
 

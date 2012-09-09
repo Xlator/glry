@@ -62,8 +62,6 @@
                 },
 
                 error: function(response) {
-                    var message = $.parseJSON(response.responseText);
-                    // alert(message.message);
                 }
             });
 

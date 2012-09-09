@@ -61,7 +61,17 @@ class AdminControllers implements ControllerProviderInterface  {
                 if($status === true)
                     return $app->json(array('message' => "Collection $collection updated"), 200);
 
-                return $app->json(array($status), 500);
+                return $app->json(array('Exception' => $status->getMessage()), 500);
+            });
+
+            $controllers->post('/reorder', function(Request $request) use ($app) {
+                $order = $request->request->get('collections');
+
+                $status = $app['galleryService']->reorderCollections($order);
+                
+                if($status === true)
+                    return $app->json(array('message' => "Collections reordered"), 200);
+                return $app->json(array('Exception' => $status->getMessage()), 500);
             });
 
             $controllers->post('/upload/{collection}', 

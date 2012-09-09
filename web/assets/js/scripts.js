@@ -16,6 +16,9 @@
         return formatted;
     }
 
+    // Notification setup
+    humane.error = humane.spawn({addnCls: 'humane-jackedup-error'});
+
     /* Events */
     $(window).on('resize', window, Helper.resize); // Responsie resize
 
@@ -92,6 +95,8 @@
 
 $(document).ready(function() {
 
+    Helper.resize();
+
     $('div#collections').css('min-height', $(window).height() - 48)
 
     // Auto-open first collection on home page
@@ -117,7 +122,20 @@ $(document).ready(function() {
                 Admin.rename($(this));
         });
 
-        $(document).one('dragenter', Helper.onDragenter); 
+        $(document).one('dragenter', Helper.Drag.enter); 
+
+        $('div#collections').find('ul').sortable({
+            revert: 100,
+            containment: 'div#collections',
+            start: function(event, ui) {
+                $.each($('div#collections').find('li').not('li.ui-sortable-placeholder').not('li.ui-sortable-helper'), function(i, li) {
+                    Helper.collectionOrder.push($(li).find('div').data('collection'));
+                });
+            },
+            stop: function(event, ui) {
+                Helper.updateCollectionOrder();
+            }
+        });
 
         $('ul#sortable').sortable({
             start: function(event, ui) {
@@ -137,5 +155,14 @@ $(document).ready(function() {
             containment: 'section#content', // Don't allow dragging outside section#content
 
         });
+
+        Helper.prev = function(src) {
+            var div = $('<div/>').append($('<img/>').attr('src', src)); 
+            div.dialog({ 
+                autoOpen: true,
+                modal: true,
+            });
+            div.appendTo($('body'));
+        }
     }
 });

@@ -17,7 +17,7 @@ class GalleryService {
                     WHERE collection_id = c.id)) 
                 AS imagecount 
                 FROM collections AS c 
-                LEFT OUTER JOIN images AS i ON i.collection_id = c.id AND i.pos = 0 ";
+                LEFT OUTER JOIN images AS i ON i.collection_id = c.id AND i.pos = 0 ORDER BY c.pos ASC";
         $collections = $this->db->fetchAll($sql);
         /* var_dump($collections); */
         $colls = array();
@@ -108,6 +108,20 @@ class GalleryService {
         }
         catch(\Exception $e) {
             return $e;
+        }
+        return true;
+    }
+
+    public function reorderCollections($order) {
+        foreach($order as $pos => $id) {
+            try {
+                $this->db->update('collections', 
+                    array('pos' => $pos), array('id' => $id)
+                );
+            }
+            catch(\Exception $e) {
+                return $e;
+            }
         }
         return true;
     }

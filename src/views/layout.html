@@ -1,79 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>The Gallery</title>
-    <!--blank favicon-->
-    <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
-    <link media="all" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css" 
-    type="text/css" rel="stylesheet" />
 
+    <head>
+        <meta charset="UTF-8" />
+
+        <title>The Gallery</title>
+
+        <!--blank favicon-->
+        <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
+        
+        <!-- CSS reset -->
+        <link media="all" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css" 
+        type="text/css" rel="stylesheet" />
+
+        <!-- jQueryUI style -->
         <link media="all" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.22/themes/blitzer/jquery-ui.css" type="text/css" rel="stylesheet" />
 
-    <link rel="stylesheet" media="screen" href="{{app.base}}assets/css/humane.css" rel="stylesheet" type="text/css"/> 
+        <!-- Humane.js notification style -->
+        <link rel="stylesheet" media="screen" href="{{app.base}}assets/css/humane.css" rel="stylesheet" type="text/css"/> 
 
-    <link media="all" href="{{app.base}}assets/css/style.css" type="text/css" rel="stylesheet" />
-    <style type="text/css"> .humane { top: 60px; } </style>
-    
-    
-    <script>
-        /* Prevent dropped files from being opened by the browser */
-        window.addEventListener("dragover",function(e){
-          e = e || event;
-          e.preventDefault();
-        },false);
-        window.addEventListener("drop",function(e){
-          e = e || event;
-          e.preventDefault();
-        },false);
-    </script>
+        
+        <link media="all" href="{{app.base}}assets/css/style.css" type="text/css" rel="stylesheet" />
+        
+        <script>
+            /* Prevent dropped files from being opened by the browser */
+            window.addEventListener("dragover",function(e){
+              e = e || event;
+              e.preventDefault();
+            },false);
+            window.addEventListener("drop",function(e){
+              e = e || event;
+              e.preventDefault();
+            },false);
+        </script>
 
-    <script type=text/javascript src=http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js> </script>
+        <!-- jQuery -->
+        <script type=text/javascript src=http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js> </script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
+        <!-- jQueryUI -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
 
-    <script type=text/javascript src="{{app.base}}assets/js/humane.min.js"></script>
-    <script type=text/javascript src="{{app.base}}assets/js/helper.js"></script>
-    <script type=text/javascript src="{{app.base}}assets/js/admin.js"></script>
-    <script type=text/javascript src="{{app.base}}assets/js/gallery.js"></script>
-    <script type=text/javascript src="{{app.base}}assets/js/login.js"></script>
-    <script type=text/javascript src="{{app.base}}assets/js/upload.js"></script>
-    <script type=text/javascript src={{app.base}}assets/js/date.js></script>
-</head>
-<body>
-{% include 'login.html' %}
+        <!-- Objects/classes -->
+        <script type=text/javascript src="{{app.base}}assets/js/humane.min.js"></script>
+        <script type=text/javascript src="{{app.base}}assets/js/helper.js"></script>
+        <script type=text/javascript src="{{app.base}}assets/js/admin.js"></script>
+        <script type=text/javascript src="{{app.base}}assets/js/gallery.js"></script>
+        <script type=text/javascript src="{{app.base}}assets/js/login.js"></script>
+        <script type=text/javascript src="{{app.base}}assets/js/upload.js"></script>
+        <script type=text/javascript src={{app.base}}assets/js/date.js></script>
 
-    <header class=mainheader data-base={{app.base}}>
-        <h1>The Gallery</h1>
-        <nav>
-            <ul>
-                <li>
-                    <a href=#>Collections</a>
-                </li>
+    </head>
 
-                {% if logged_in == 0 %}
-                <li>
-                    <a href=#login class=log>Login</a>
-                </li>
-                {% else %}
-                <li> 
-                    <a href=#admin class=admin>Admin</a>
-                </li>
-                <li>
-                    <a href=#logout class=log>Logout</a> 
-                </li>
-                {% endif %}
-        </nav>
-    </header>
-    
-    <section id=content>
-        {% block content %}{% endblock %}
-    </section>
-    
-    <section id=sidebar>
-        {% include 'collections.html' %}
-    </section>
-    
-    <script src="{{app.base}}assets/js/scripts.js"></script>
-</body>
+    <body>
+
+        {% include 'login.html' %}
+
+        <header class=mainheader data-base={{app.base}}>
+            <h1>The Gallery</h1>
+            <nav>
+                <ul>
+                    <li>
+                        <a href=#>Collections</a>
+                    </li>
+
+                    {% if logged_in == 0 %}
+                    <li>
+                        <a href=#login class=log>Login</a>
+                    </li>
+                    {% else %}
+                    <li> 
+                        <a href=#admin class=admin>Admin</a>
+                    </li>
+                    <li>
+                        <a href=#logout class=log>Logout</a> 
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        
+        <section id=content>
+            {% block content %}{% endblock %}
+        </section>
+        
+        <section id=sidebar>
+            {% include 'collections.html' %}
+        </section>
+        
+        <!-- Events -->
+        <script src="{{app.base}}assets/js/scripts.js"></script>
+    </body>
 </html>

@@ -1,3 +1,6 @@
+.humane {
+  top: 60px; }
+
 @font-face {
   font-family: 'd puntillas B to tiptoe';
   src: url("../fonts/d-puntillas-B-to-tiptoe.ttf") format("truetype");
@@ -72,8 +75,8 @@ section#content {
   section#content div.mainimg {
     max-width: 1125px;
     width: 1125px;
-    max-height: 750px;
-    height: 750px;
+    max-height: 850px;
+    height: 850px;
     background-image: url(../images/load.gif);
     background-repeat: no-repeat;
     background-position: center; }
@@ -113,7 +116,6 @@ section#content {
       margin-left: 16px;
       font-weight: 600; }
     section#content div.admin header nav {
-      width: 40%;
       height: 2em;
       float: right; }
       section#content div.admin header nav img {
@@ -131,11 +133,15 @@ section#content {
     margin-left: 16px;
     float: left; }
     section#content div.admin ul li.adminpreview {
+      background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#d9d9d9));
+      background: -webkit-linear-gradient(top, #f2f2f2, #d9d9d9);
+      background: -moz-linear-gradient(top, #f2f2f2, #d9d9d9);
+      background: -ms-linear-gradient(top, #f2f2f2, #d9d9d9);
+      background: -o-linear-gradient(top, #f2f2f2, #d9d9d9);
       cursor: grab;
       border-radius: 10%;
       padding: 1em;
       border: 1px solid #ddd;
-      background-image: -moz-linear-gradient(top, white, #f7f7f7 3%, #f2f2f2 12%, #eeeeee 90%, #bfbfbf);
       float: left;
       max-width: 200px;
       height: 266px;
@@ -211,6 +217,7 @@ footer.previews {
     opacity: 0.5;
     width: 100px;
     margin-left: 10px;
+    margin-bottom: 10px;
     padding: 0;
     float: left; }
     footer.previews li:hover {
@@ -236,14 +243,17 @@ div#collections {
   margin: 0;
   overflow: auto;
   padding: 0;
+  padding-top: 1em;
   background: #aaa;
   width: 100%; }
   div#collections ul {
     list-style-type: none;
     margin: 0;
     text-indent: 0;
-    margin: auto; }
+    margin: auto;
+    float: left; }
     div#collections ul li {
+      float: left;
       width: 200px;
       margin: 0em 0em 16px 16px; }
       div#collections ul li div.image {
@@ -283,17 +293,16 @@ div#collections {
             float: right; }
 
 @media screen and (max-width: 1580px) {
-  div#collections ul {
+  div#collections ul li {
     float: none; } }
 /* You can customize to your needs  */
 .login-popup {
   border: 1px solid black;
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#fcfcfc), to(#bfbfbf), color-stop(3%, #f7f7f7), color-stop(12%, #f2f2f2), color-stop(90%, #d9d9d9));
-  background-image: -webkit-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-  background-image: -moz-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-  background-image: -o-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-  background-image: -ms-linear-gradient(top, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
-  background-image: linear-gradient(to bottom, #fcfcfc, #f7f7f7 3%, #f2f2f2 12%, #d9d9d9 90%, #bfbfbf);
+  background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#d9d9d9));
+  background: -webkit-linear-gradient(top, #f2f2f2, #d9d9d9);
+  background: -moz-linear-gradient(top, #f2f2f2, #d9d9d9);
+  background: -ms-linear-gradient(top, #f2f2f2, #d9d9d9);
+  background: -o-linear-gradient(top, #f2f2f2, #d9d9d9);
   -webkit-box-shadow: 21px 24px 100px 2px rgba(255, 255, 255, 0.16), inset 0 100px 100px 18px rgba(255, 239, 8, 0.04);
   -moz-box-shadow: 21px 24px 100px 2px rgba(255, 255, 255, 0.16), inset 0 100px 100px 18px rgba(255, 239, 8, 0.04);
   box-shadow: 21px 24px 100px 2px rgba(255, 255, 255, 0.16), inset 0 100px 100px 18px rgba(255, 239, 8, 0.04);

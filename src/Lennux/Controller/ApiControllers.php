@@ -13,8 +13,14 @@ class ApiControllers implements ControllerProviderInterface  {
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/c/{collection_id}', function($collection_id) use ($app){
-            $collection = $app['galleryService']->getCollection($collection_id);
-            return $app->json($collection, 200);
+            try {
+                $collection = $app['galleryService']->getCollection($collection_id);
+                return $app->json($collection, 200);
+            }
+
+            catch(\Exception $e) {
+                return $app->json(array("Exception" => $e->getMessage()),500);
+            }
         })->assert('collection_id', '\d+');
 
         $controllers->get('/c', function() use($app) {

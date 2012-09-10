@@ -25,7 +25,6 @@ body {
     font-family: sans-serif;
     font-weight: 400;
     height: 100%;
-
     h1, h2, h3 {
         font-size: 1.5em;
         font-family: 'd puntillas B to tiptoe';
@@ -111,8 +110,9 @@ section#content {
     div.mainimg {
         max-width: 1125px;
         width: 1125px;
-        max-height: 850px;
+        max-height: 737px;
         height: 850px;
+        //position: fixed;
 
         background: {
             image: url(../images/load.gif);
@@ -186,7 +186,6 @@ section#content {
             }
 
             nav {
-                // background: #090;
                 height: 2em;
                 float: right;
 
@@ -319,14 +318,17 @@ section#content {
 }
 
 footer.previews {
-    // &:hover {
-    //     border: 1px solid black;
-    // }
-
     height: 150px;
     padding: 0;
     margin: 0;
     margin-bottom: 16px;
+    position: fixed;
+
+
+    span:hover {
+        cursor: pointer;
+        color: #fff;
+    }
 
     ul {
         margin: {
@@ -335,6 +337,7 @@ footer.previews {
         padding:0;
         text-indent:0;
         overflow-x: hidden;
+        position: absolute;
     }
 
     li {
@@ -378,7 +381,7 @@ section#sidebar { /* Clearfix */
 }
 
 div#collections { 
-    position: fixed;
+    //position: fixed;
     // border: 1px dashed #999; 
     margin: 0; 
     overflow: auto;
@@ -413,6 +416,10 @@ div#collections {
                 height: 200px;
                 opacity: 0.3;
                 border-radius: 10px 0px 10px 10px;
+
+                &.selected {
+                    opacity: 1;
+                }
 
                 &:hover {
                     opacity: 1;

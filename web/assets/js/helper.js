@@ -69,17 +69,41 @@ Helper = {
 
         // Responsive resizing of elements according to window size
         resize: function() {
+            var currentImage = Gallery.currentImage;
+            var elem = $('div.mainimg');
+            var rightarrow = $('footer.previews span').last();
+            var previewWidth = $('footer.previews ul').width();
             var height = $(window).height(),
                 width = $(window).width(),
-                divwidth = width - 230;
+                ratio = currentImage.width / currentImage.height,
+                maxheight = parseInt(elem.css('max-height')),
+                divwidth = maxheight * ratio,
+                divheight = maxheight;
+
+            if(width < divwidth + 230) {
+                divwidth = $(window).width() - 230;
+                divheight = divwidth / ratio;
+            }
 
             $('.mainimg').css({
                 'width': divwidth, 
-                'height': 2*((width - 230) / 3), 
+                'height': divheight,
                 'background-size': 'contain'
             });
 
+            $('#collections').css({
+                'min-height': divheight - 16,
+                'max-height': divheight - 16});
             $('#content, body > header').css({'width': divwidth});
+
+            rightarrow.css('left', $(window).width() - 24);
+
+            if(previewWidth + (Helper.collpos * -110) > $(window).width()) {
+                Helper.showArrows('right');
+
+                if(Helper.collpos > 0)
+                    Helper.showArrows('left');
+            } 
         },
 
         background: function(collection, filename) {
@@ -240,5 +264,110 @@ Helper = {
                 image.elem.appendTo($('ul#sortable'));
             });
             Helper.updateOrder();
+        },
+
+        scrollCollection: function() {
+            if(Helper.collpos == undefined)
+                Helper.collpos = 0;
+
+            var list = $('footer.previews ul');
+            oldpos = parseInt(list.css('left')),
+            dir = $(this).text() == '<' ? 'left' : 'right';
+            $(this).off();
+            $this = $(this);
+
+            if(dir == 'right') {
+                Helper.collpos++;
+                Helper.showArrows('left');
+
+                list.animate({'left': oldpos - 110}, 40);
+            }
+            else {
+                Helper.collpos--;
+                Helper.showArrows('right');
+            }
+            
+            var newpos = 0 - (Helper.collpos * 110);
+            list.animate({'left': newpos}, 40, function() {
+                $this.on('click', Gallery.scrollCollection);
+            });
+
+            if(list.width() + (newpos - 10) < $(window).width())
+                Helper.hideArrows('right');
+
+            if(newpos >= 0) {
+                Helper.hideArrows('left');
+            }
+
+        },
+        hideArrows: function(dir) {
+            switch(dir) {
+                case 'left':
+                    Gallery.arrows.first().hide();
+                    break;
+                case 'right':
+                    Gallery.arrows.last().hide();
+                    break;
+                default:
+                    Gallery.arrows.hide();
+            }
+        },
+
+        showArrows: function(dir) {
+            switch(dir) {
+                case 'left':
+                    Gallery.arrows.first().show();
+                    break;
+                case 'right':
+                    Gallery.arrows.last().show();
+                    break;
+                default:
+                    Gallery.arrows.show();
+            }
+        },
+
+        createArrows: function() {
+            $('<span/>').text('<').css({
+                'font-size': '1.5em',
+                'font-family': 'd puntillas B to tiptoe',
+                position: 'absolute',
+                'padding': 7,
+                'padding-top': 50,
+                'color': '#333',
+                'margin': 0,                        
+                'height':100,
+                'zIndex': 3,
+                opacity: 0.8,
+                'background': '#000',
+
+                // Disable selection
+                '-webkit-touch-callout': 'none',
+                '-webkit-user-select': 'none',
+                '-khtml-user-select': 'none',
+                '-moz-user-select': 'none',
+                '-ms-user-select': 'none',
+                'user-select': 'none',
+
+                'border-top-right-radius': '100%',
+                'border-bottom-right-radius': '100%',
+
+            }).prependTo($('footer.previews'));
+
+            $('footer.previews span').clone()
+                .css({
+                    'left': $(window).width() - 24,
+                    'border-radius': 0,
+                    'border-top-left-radius': '100%',
+                    'border-bottom-left-radius': '100%',
+                }).text('>')
+                .appendTo($('footer.previews'));
+
+            Gallery.arrows = $('footer.previews span');
+            Gallery.arrows.on('mouseover', function() {
+                $(this).css('color','white');
+            })
+            .on('mouseout', function() {
+                $(this).css('color','#333');
+            });
         }
     };

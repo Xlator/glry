@@ -27,22 +27,18 @@
     $(window).on('drop', 'div#collectionDrop', function(e) { Upload.drop(e); });
 
 
-    $('body').on('click', 'a.login-window', Login.open);
-    $('body').on('click', 'a.close,#mask', Login.close);
+    $('body').on('click', 'a.login-window', Login.open)
+             .on('click', 'a.close,#mask', Login.close)
+             .on('click', 'div.image', Gallery.collection)
+             .on('click', 'div.preview', Gallery.viewImage)
+             .on('click', 'footer.previews span', Helper.scrollCollection)
+             .on('submit', 'form.signin', function(e) {
+                Login.submit(e);
+             })
 
-    $('body').on('click', 'div.image', function(e) { 
-        Gallery.collection($(this).data('collection')); 
-    });
-
-    $('body').on('click', 'div.preview', Gallery.viewImage);
-
-    $('body').on('submit', 'form.signin', function(e) {
-        Login.submit(e);
-    });
-
-    $('body').on('click', "nav a", function(e) {
-        e.preventDefault();
-        var action = $(this).attr('href');
+             .on('click', "nav a", function(e) {
+                e.preventDefault();
+                var action = $(this).attr('href');
 
         switch(action) {
             // case "#move":
@@ -95,7 +91,7 @@
 
 $(document).ready(function() {
 
-    Helper.resize();
+    // Helper.resize();
 
     $('div#collections').css('min-height', $(window).height() - 48)
 
@@ -104,7 +100,7 @@ $(document).ready(function() {
         var collection = Helper.collectionFromURL();
         if(isNaN(collection))
             $('div.image').first().click();
-        else 
+        else
             Gallery.collection(collection);
     }
 

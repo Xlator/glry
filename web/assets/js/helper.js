@@ -69,6 +69,15 @@ Helper = {
 
         // Responsive resizing of elements according to window size
         resize: function() {
+            if(Helper.isAdmin()) {
+                console.log('wtf');
+                var body = $('section#content, header.mainheader'),
+                    width = $(window).width() - 230;
+
+                body.css({'width': width, 'max-width': width});
+                return true;
+            }
+
             var currentImage = Gallery.currentImage;
             var elem = $('div.mainimg');
             var rightarrow = $('footer.previews span').last();

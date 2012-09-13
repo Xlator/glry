@@ -116,6 +116,7 @@ $(document).ready(function() {
 
 
     else {
+        Helper.resize();
         $('header.mainheader').find('li:nth-child(2) a').addClass('current');
         Gallery.currentCollection = Helper.collectionFromURL();
         Helper.pageTitle("Edit collection");
@@ -155,7 +156,7 @@ $(document).ready(function() {
 
             stop: function(event, ui) {
                 ui.item.siblings().css('opacity', 1);
-                Helper.updateOrder();
+                Helper.updateOrder(true);
             },
             revert: 100,
             handle: 'img.move', // Only move item when clicking move icon

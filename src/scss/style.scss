@@ -81,13 +81,16 @@ header.mainheader {
                 color: #333;
                 text-decoration: none;
                 padding: 0.3em 0.3em 0.1em 0.3em;
-                &:hover {
+                &:hover, &.current {
                     color: #900;
+                }
+                &.current {
+                   cursor: default; 
                 }
             }
 
             &:first-child a {
-                color: #900;
+                // color: #900;
                 padding-left: 0;
             }
 

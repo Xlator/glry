@@ -52,6 +52,12 @@
             case "#":
                 return false;
 
+            case "#home":
+                if(!Helper.isAdmin())
+                    return false;
+                window.location = "{0}{1}".format(basepath, Gallery.currentCollection);
+                break;
+
             case "#uploaded": // Sort images by upload time
                 Helper.sort('uploaded');
                 break;
@@ -61,6 +67,8 @@
                 break;
 
             case "#admin": // Go to admin page
+                if(Helper.isAdmin())
+                    return false;
                 window.location = "{0}admin/{1}".format(basepath, Gallery.currentCollection);
                 break;
 
@@ -98,14 +106,17 @@ $(document).ready(function() {
     // Auto-open first collection on home page
     if(!Helper.isAdmin()) {
         var collection = Helper.collectionFromURL();
+        $('header.mainheader').find('li:first-child a').addClass('current');
         if(isNaN(collection))
             $('div.image').first().click();
-        else
+        else {
             Gallery.collection(collection);
+        }
     }
 
 
     else {
+        $('header.mainheader').find('li:nth-child(2) a').addClass('current');
         Gallery.currentCollection = Helper.collectionFromURL();
         Helper.pageTitle("Edit collection");
 

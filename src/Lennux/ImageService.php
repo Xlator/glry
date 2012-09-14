@@ -99,7 +99,7 @@ class ImageService {
             $this->tmpPath = $outFile;    
             return true;
         }
-        throw new Exception('ImageMagick failed with a return code of $ret');
+        throw new \Exception('ImageMagick failed with a return code of $ret');
         return false;
     }
 }

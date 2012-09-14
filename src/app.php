@@ -1,5 +1,6 @@
 <?php
 /* phpinfo(); */
+/* var_dump(sprintf("%s%scollections/", $_SERVER['DOCUMENT_ROOT'], $this->app['base'])); */
 ini_set('html_errors', 'on');
 date_default_timezone_set(@date_default_timezone_get());
 $app['im_prefix'] = "/usr/local/bin";

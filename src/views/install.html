@@ -1,7 +1,36 @@
-{% block content %}
-<form method=post action="">
-{{ form_widget(form) }}
-{{ message }}
-<input type="submit" class="submit" value="Install" name="" />
-</form>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+
+        <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
+        
+        <!-- CSS reset -->
+        <link media="all" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css" 
+        type="text/css" rel="stylesheet" />
+
+        <style>
+            div {
+                font-family: sans-serif;
+                padding: 3em;
+            }
+
+            h1 {
+                margin-bottom: 0.3em;
+                font-weight: 600;
+            }
+        </style>
+</head>
+<body>
+    <div>
+        <h1>Welcome to glry, choose an admin name and password</h1>
+        <form method=post action="">
+        {{ form_widget(form.username) }}
+        {{ form_widget(form.password) }}
+        {{ message }}
+        <input type="submit" class="submit" value="Install" name="" />
+        </form>
+    </div>
+</body>
+</html>

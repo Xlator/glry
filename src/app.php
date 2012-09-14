@@ -1,6 +1,6 @@
 <?php
 /* phpinfo(); */
-/* ini_set('html_errors', 'on'); */
+ini_set('html_errors', 'on');
 date_default_timezone_set(@date_default_timezone_get());
 
 /** Namespaces **/

@@ -33,12 +33,10 @@ class BaseControllers implements ControllerProviderInterface  {
 
         };
 
-        $controllers->match('/', $mainpage, 'POST|GET');
-        $controllers->match('/{collection}', $mainpage, 'POST|GET');
-
         $controllers->match('/install', function(Request $request) use ($app) {
-            if($app['login']->checkInstalled())
-                throw new Exception('Password is already set');
+            if($app['login']->checkInstalled()) {
+                throw new \Exception('Password is already set');
+            }
 
             $data = array(
                 'username' => 'Username',
@@ -55,14 +53,15 @@ class BaseControllers implements ControllerProviderInterface  {
             if('POST' == $request->getMethod()) {
                 $form->bindRequest($request);
 
-                if($form->isValid()) {
+                /* var_dump($form->isValid()); */
+                /* if($form->isValid()) { */
                     $data = $form->getData();
                     $app['login']->storeUser($data['username'], $data['password']);
                     $app->redirect($app['base']);
-                }
+                /* } */
 
-                else
-                    $message = "Invalid input";
+                /* else */
+                /*     $message = "Invalid input"; */
             }
 
             return $app['twig']->render('install.html', array(
@@ -70,6 +69,9 @@ class BaseControllers implements ControllerProviderInterface  {
                 'form' => $form->createView())
             );
         }, 'POST|GET');
+        $controllers->match('/', $mainpage, 'POST|GET');
+        $controllers->match('/{collection}', $mainpage, 'POST|GET');
+
 
         return $controllers;
     }

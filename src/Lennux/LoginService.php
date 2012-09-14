@@ -10,8 +10,6 @@ class LoginService {
     }
 
     public function checkInstalled() {
-
-
         $result = $this->db->fetchAssoc("SELECT COUNT(*) AS count FROM login"); 
         return $result["count"];
     }

@@ -34,8 +34,14 @@ class BaseControllers implements ControllerProviderInterface  {
         };
 
         $controllers->match('/install', function(Request $request) use ($app) {
-            if($app['login']->checkInstalled()) {
-                throw new \Exception('Password is already set');
+
+            $perms = $app['install']->checkPerms();
+            $status = $app['install']->status;
+            $installed = false;
+
+            if($status && $app['login']->checkInstalled()) {
+                /* throw new \Exception('Password is already set'); */
+                $installed = true;
             }
 
             $data = array(
@@ -65,7 +71,9 @@ class BaseControllers implements ControllerProviderInterface  {
             }
 
             return $app['twig']->render('install.html', array(
+                'perms' => $app['install']->checkPerms(),
                 'message' => $message, 
+                'installed' => $installed,
                 'form' => $form->createView())
             );
         }, 'POST|GET');

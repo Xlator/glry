@@ -19,12 +19,6 @@ date_default_timezone_set(@date_default_timezone_get());
     $app['base'] = ($path['dirname'] != "/" ? $path['dirname'] . "/" : "/" );
 
     /* var_dump($_SERVER); */
-    $dbfile = __DIR__."/../db/glry.db";
-
-    if(!file_exists($dbfile)) {
-        copy(__DIR__."/../db/glry.db.dist", $dbfile);
-        /* chmod('/db/glry.db', 0700); */
-    }
 
     $app->register(new Silex\Provider\TranslationServiceProvider());
     $app->register(new Silex\Provider\SessionServiceProvider());
@@ -44,6 +38,7 @@ date_default_timezone_set(@date_default_timezone_get());
     ));
 
     // Initialise services
+    $app->register(new Lennux\InstallerServiceProvider());
     $app->register(new Lennux\GalleryServiceProvider());
     $app->register(new Lennux\UploadServiceProvider());
     $app->register(new Lennux\LoginServiceProvider());

@@ -20,17 +20,83 @@
                 margin-bottom: 0.3em;
                 font-weight: 600;
             }
+
+            dl
+            {
+                width: 300px;
+                margin: 1em 0;
+                padding: 0;
+                border-bottom: 1px solid #999;
+            }
+
+            dl:after {
+                content "."; display: block; height: 0; clear: both; visibility: hidden;
+            }
+
+            dl dt
+            {
+                clear: left;
+                float: left;
+                width: 180px;
+                margin: 0;
+                padding: 5px;
+                border-top: 1px solid #999;
+                font-weight: 600;
+            }
+
+            dl dd
+            {
+                float: left;
+                width: 100px;
+                margin: 0;
+                padding: 5px;
+                border-top: 1px solid #999;
+            }
+
+            .error {
+                color: #900;
+            }
+
+            .ok {
+                color: #090;
+            }
+
+            div.install {
+                position: absolute;
+                padding:0;
+                top: 14em;
+            }
         </style>
 </head>
 <body>
     <div>
-        <h1>Welcome to glry, choose an admin name and password</h1>
-        <form method=post action="">
-        {{ form_widget(form.username) }}
-        {{ form_widget(form.password) }}
-        {{ message }}
-        <input type="submit" class="submit" value="Install" name="" />
-        </form>
+        <h1>Welcome to glry</h1>
+            <dl>
+                {% set errors = 0 %}
+                {% for k, perm in perms %}
+                    {% set class='ok' %}
+                    {% if perm.writable == false %}
+                        {% set errors = 1 %}
+                        {% set class = 'error' %}
+                    {% endif %}
+                    <dt>{{perm.filename}}
+                    <dd class={{class}}>{{ perm.writable ? 'Writeable' : 'Not writeable' }}
+                {% endfor %}
+            </dl>
+        <div class="install">
+            {%if installed == true %}
+                <h2 class="ok">Glry is already installed</h2>
+            {% elseif errors != 1 %}
+                <form method=post action="">
+                <h2>Please choose a username and password</h2>
+                {{ form_widget(form.username) }}
+                {{ form_widget(form.password) }}
+                {{ message }}
+                <input type="submit" class="submit" value="Install" name="" />
+                </form>
+            {% else %}
+            <h2 class="error">Please make sure all the above files/directories are writeable</h2>
+        {% endif %}
     </div>
 </body>
 </html>

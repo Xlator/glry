@@ -18,7 +18,7 @@ class UploadService {
         $tmpName = sprintf('/tmp/%s', md5(microtime()));
 
         if(!file_put_contents($tmpName, $file)) {
-            throw new Exception('File upload failed');
+            throw new \Exception('File upload failed');
             return false;
         }
 

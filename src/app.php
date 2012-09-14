@@ -3,7 +3,6 @@
 /* var_dump(sprintf("%s%scollections/", $_SERVER['DOCUMENT_ROOT'], $this->app['base'])); */
 ini_set('html_errors', 'on');
 date_default_timezone_set(@date_default_timezone_get());
-$app['im_prefix'] = "/usr/local/bin";
 
 /** Namespaces **/
     use Silex\Application;
@@ -14,6 +13,7 @@ $app['im_prefix'] = "/usr/local/bin";
     require_once __DIR__.'/../vendor/autoload.php';
     $path = pathinfo($_SERVER['SCRIPT_NAME']);
     $app = new Application();
+    $app['im_prefix'] = "/usr/local/bin";
 
     $app['debug'] = true;
     $app['base'] = ($path['dirname'] != "/" ? $path['dirname'] . "/" : "/" );

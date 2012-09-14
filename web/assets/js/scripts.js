@@ -16,6 +16,11 @@
         return formatted;
     }
 
+    String.prototype.getFileName = function() {
+        var input = this;
+        return input.slice(input.lastIndexOf('/') + 1, input.length).replace(/["']/g,'');
+    }
+
     // Notification setup
     humane.error = humane.spawn({addnCls: 'humane-jackedup-error'});
 
@@ -36,10 +41,26 @@
                 Login.submit(e);
              })
 
+             .on('click', 'span.next', Gallery.nextImage)
+             .on('click', 'span.prev', Gallery.prevImage)
+
+             .on('keyup', function(e) {
+                switch(e.which) {
+                    case 37:
+                        Gallery.prevImage();
+                        break;
+                    case 39:
+                        Gallery.nextImage();
+                        break;
+                    default:
+                        break;
+                }
+             })
+
              .on('click', "nav a", function(e) {
                 e.preventDefault();
-                var action = $(this).attr('href');
-
+                var action = $(this).attr('href')
+                 
         switch(action) {
             // case "#move":
             //     Gallery.previewPos();

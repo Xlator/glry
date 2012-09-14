@@ -3,6 +3,10 @@ Gallery = {
     currentCollection: 0,
     selectedCollection: 0,
     pos: 0,
+    // backgroundImageRegex: new RegExp("url\(([^\)]+?)\)"),
+
+
+
 
     mask: function() { // Apply mask for modal windows
         $('body').append('<div id="mask"></div>');
@@ -27,7 +31,7 @@ Gallery = {
     collection: function(collection) { // Open a collection
         switch(typeof arguments[0]) {
             case "number":
-                console.log(Gallery.currentCollection);
+                // console.log(Gallery.currentCollection);
                 Gallery.selectedCollection = arguments[0];
                 collection = Gallery.selectedCollection;
                 $this = $('div.image').filter(':visible').filter(Gallery.filterCollections);
@@ -41,9 +45,9 @@ Gallery = {
 
         var li = $this.parent();
 
-        console.log($this);
-        console.log(li);
-        console.log(li.siblings());
+        // console.log($this);
+        // console.log(li);
+        // console.log(li.siblings());
 
         li.siblings().children().removeClass('selected');
         $this.addClass('selected');
@@ -67,22 +71,26 @@ Gallery = {
             url: "{0}api/c/{1}".format(basepath, collection),
             success: function(response) {
                 images = response.images;
+                // console.log(images);
 
                 if(images.length > 0) {
                     var key = images[0];
                     Gallery.currentCollection = collection;
                     Helper.pageTitle(response.title);
                     if(Helper.isAdmin() == false) {
-                        Gallery.viewImage(key.collection_id, key.filename);
+                        Gallery.viewImage(key.collection_id, key.filename, key.title);
 
                         // Clear previews before loading
                         $('footer.previews').find('ul').text("");
-
+                        
                         jQuery.each(images, Gallery.previews);
                         // $('section#images').text("").append(response).show();
                         // Helper.resize();
                         width = $('footer.previews ul').width((Gallery.imagecount * 110) + 32).width();
                         $('footer.previews ul').css('left', 0);
+
+                     $('body').on('mouseenter', 'section#content', Helper.showImgExtras)
+                              .on('mouseleave', 'section#content', Helper.hideImgExtras);
                         
                         // $('footer.previews ul').css({
                         //     position: 'absolute',
@@ -115,7 +123,7 @@ Gallery = {
         li = $('<li/>');
         div = $('<div/>').css({
             "background-image": Helper.background(v.collection_id, v.filename)
-        }).addClass('preview').appendTo(li);
+        }).addClass('preview').attr('data-title', v.title).appendTo(li);
 
         // Highlight first preview
         if(k == 0) {
@@ -127,23 +135,68 @@ Gallery = {
     },
 
     viewImage: function() {
+        console.log(arguments);
+        var $this = $(this);
         // Click preview to load image
         Gallery.currentImage = new Image();
         if(arguments.length == 1) {
-            var background = $(this).css('background-image');
+            var background = $this.css('background-image'),
+                title = $this.data('title');
+
             Gallery.currentImage.src = background.slice(5, background.length - 2);
-            $(this).parent().siblings().removeClass('selected');
-            $(this).parent().addClass('selected');
+            $this.parent().siblings().removeClass('selected');
+            $this.parent().addClass('selected');
         }
 
-        // Autoload first image
+        // Autoload first image or click next/prev
         else {
-            var background = Helper.background(arguments[0], arguments[1]);
+
+            if(arguments.length == 4) { // Next/prev
+                arguments[3].addClass('selected').siblings().removeClass('selected');
+            }
+
+            var background = Helper.background(arguments[0], arguments[1].getFileName()),
+                title = arguments[2];
+            
+            
             Gallery.currentImage.src = background.slice(4, background.length - 1);
         }
 
         $('div.mainimg').css('background-image', background);
+        if(title == null)
+            $('footer.caption').text('').hide();
+        else
+            $('footer.caption').text(title).hide();
         Helper.resize();
+    },
+
+    nextImage: function() {
+        // try {
+            var next = $('footer.previews').find('li.selected').next('li').children('div'),
+                background = next.css('background-image'),
+                image = background.slice(background.indexOf('(') + 1, background.lastIndexOf(')'));
+
+            console.log(image);
+
+            Gallery.viewImage(Gallery.currentCollection, image, next.data('title'), next.parent());
+            if(next.parent().next().length == 0)
+                $('span.next').hide();
+            $('span.prev').show();
+        // }
+        // catch(e) {}
+    },
+
+    prevImage: function() {
+        try {
+            var prev = $('footer.previews').find('li.selected').prev('li').children('div'),
+                background = prev.css('background-image'),
+                image = background.slice(background.indexOf('(') + 1, background.lastIndexOf(')'));
+            Gallery.viewImage(Gallery.currentCollection, image, prev.data('title'), prev.parent());
+            if(prev.parent().index() == 0)
+                $('span.prev').hide();
+            $('span.next').show();
+        }
+        catch(e) {}
     }
 
 };

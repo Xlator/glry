@@ -70,7 +70,6 @@ Helper = {
         // Responsive resizing of elements according to window size
         resize: function() {
             if(Helper.isAdmin()) {
-                console.log('wtf');
                 var body = $('section#content, header.mainheader'),
                     width = $(window).width() - 230;
 
@@ -99,6 +98,8 @@ Helper = {
                 'height': divheight,
                 'background-size': 'contain'
             });
+
+            $('footer.caption').css('width',divwidth - 16);
 
             $('#collections').css({
                 'min-height': divheight - 16,
@@ -338,10 +339,10 @@ Helper = {
         createArrows: function() {
             $('<span/>').text('<').css({
                 'font-size': '1.5em',
-                'font-family': 'd puntillas B to tiptoe',
+                'font-family': 'WebSymbolsRegular',
                 position: 'absolute',
                 'padding': 7,
-                'padding-top': 50,
+                'padding-top': 58,
                 'color': '#333',
                 'margin': 0,                        
                 'height':100,
@@ -378,5 +379,36 @@ Helper = {
             .on('mouseout', function() {
                 $(this).css('color','#333');
             });
+        },
+
+        showImgExtras: function(e) {
+            var caption = $('footer.caption'),
+                index = $('footer.previews').find('li.selected').index(),
+                previews = $('footer.previews').find('ul').first().find('li');
+                next = $('span.next'),
+                prev = $('span.prev');
+            console.log(index);
+
+            if(caption.text() != '')
+                caption.fadeIn();
+
+            if(index == 0) 
+                next.fadeIn();
+
+            else if(index == previews.length - 1)
+                prev.fadeIn();
+
+            else {
+                next.fadeIn();
+                prev.fadeIn();
+            }
+        },
+
+        hideImgExtras: function(e) {
+            var caption = $('footer.caption'),
+                buttons = $('div.mainimg').find('span');
+            if(caption.is(':visible'))
+                caption.fadeOut();
+            buttons.fadeOut();
         }
     };

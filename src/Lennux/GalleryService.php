@@ -24,7 +24,6 @@ class GalleryService {
         foreach($collections as $c) {
             $colls[$c["id"]] = $c;
         }
-
         return $colls;
     }
 

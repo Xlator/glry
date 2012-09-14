@@ -15,6 +15,15 @@ date_default_timezone_set(@date_default_timezone_get());
 
     $app['debug'] = true;
     $app['base'] = ($path['dirname'] != "/" ? $path['dirname'] . "/" : "/" );
+
+    /* var_dump($_SERVER); */
+    $dbfile = __DIR__."/../db/glry.db";
+
+    if(!file_exists($dbfile)) {
+        copy(__DIR__."/../db/glry.db.dist", $dbfile);
+        /* chmod('/db/glry.db', 0700); */
+    }
+
     $app->register(new Silex\Provider\TranslationServiceProvider());
     $app->register(new Silex\Provider\SessionServiceProvider());
     $app->register(new Silex\Provider\FormServiceProvider());

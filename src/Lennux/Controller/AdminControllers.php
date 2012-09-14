@@ -25,13 +25,18 @@ class AdminControllers implements ControllerProviderInterface  {
                     ->add('password','password')
                     ->getForm();
 
-                return $app['twig']->render('admin.html', array(
-                    'collection_id' => $collection,
-                    'images' => $app['galleryService']->getCollection($collection),
-                    'collections' => $app['galleryService']->getCollections(),
-                    'form' => $form->createView(),
-                    'logged_in' => 1,
-                )); 
+                try {
+                    return $app['twig']->render('admin.html', array(
+                        'collection_id' => $collection,
+                        'images' => $app['galleryService']->getCollection($collection),
+                        'collections' => $app['galleryService']->getCollections(),
+                        'form' => $form->createView(),
+                        'logged_in' => 1,
+                    )); 
+                }
+                catch(\Exception $e) { // No collections
+                    return $app['twig']->render('admin_blank.html');
+                }
 
             });
 

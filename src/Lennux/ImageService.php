@@ -94,7 +94,7 @@ class ImageService {
 
     private function runCommand($filter, $args, $outFile) {
         $out = array();
-        exec("/usr/local/bin/convert $this->tmpPath -$filter $args $outFile", $out, $ret);
+        exec($app['im_prefix']."/convert $this->tmpPath -$filter $args $outFile", $out, $ret);
         if($ret == 0) {
             $this->tmpPath = $outFile;    
             return true;

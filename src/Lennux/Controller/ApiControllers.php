@@ -46,6 +46,13 @@ class ApiControllers implements ControllerProviderInterface  {
 
         });
 
+        $controllers->get('/login', function (Request $request) use($app) {
+			if($app['session']->get('login') == 1)
+				return $app->json(array(), 200);
+			else			
+				return $app->json(array(), 403);
+		});
+
         $controllers->get('/logout', function() use($app) {
             $app['session']->clear();
             return $app->json(array(), 200);

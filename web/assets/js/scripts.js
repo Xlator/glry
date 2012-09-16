@@ -127,6 +127,7 @@ $(document).ready(function() {
     // Auto-open first collection on home page
     if(!Helper.isAdmin()) {
         var collection = Helper.collectionFromURL();
+		console.log(collection);
         $('header.mainheader').find('li:first-child a').addClass('current');
         if(isNaN(collection))
             $('div.image').first().click();

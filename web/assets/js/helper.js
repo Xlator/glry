@@ -70,7 +70,7 @@ Helper = {
         // Responsive resizing of elements according to window size
         resize: function() {
             if(Helper.isAdmin()) {
-                var body = $('section#content, header.mainheader'),
+                var body = $('section#content'),
                     width = $(window).width() - 230;
 
                 body.css({'width': width, 'max-width': width});
@@ -104,7 +104,7 @@ Helper = {
             $('#collections').css({
                 'min-height': divheight - 16,
                 'max-height': divheight - 16});
-            $('#content, body > header').css({'width': divwidth});
+            $('#content').css({'width': divwidth});
 
             rightarrow.css('left', $(window).width() - 24);
 

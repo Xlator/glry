@@ -125,7 +125,7 @@ $(document).ready(function() {
     $('div#collections').css('min-height', $(window).height() - 48)
 
     // Auto-open first collection on home page
-    if(!Helper.isAdmin()) {
+    if(!Helper.isAdmin() || $('div.admin').length === 0) {
         var collection = Helper.collectionFromURL();
 		console.log(collection);
         $('header.mainheader').find('li:first-child a').addClass('current');

@@ -51,18 +51,7 @@ Helper = {
         },
 
         isAdmin: function() {
-			var admin = false;
-            if(window.location.href.indexOf("admin") != -1) {
-				$.ajax({
-					url: "{0}api/login".format(basepath),
-					type: "get",
-					dataType: "json",
-					success: function() {
-						admin = true;
-					}
-				});
-			}
-			return admin;
+            return window.location.href.indexOf("admin") != -1;
         },
 
         pageTitle: function(title) { // Change/reset page title and contents of h1
